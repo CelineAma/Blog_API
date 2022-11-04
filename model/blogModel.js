@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt"); //This is for password encryption
+// const bcrypt = require("bcrypt"); //This is for password encryption
 
 
 const Schema = mongoose.Schema;
@@ -12,6 +12,7 @@ const blogSchema = new Schema({
         type: String,
         trim: true,
         maxLength: 35,
+        unique: true,
         required:[true, "Please provide your title"],
     },
 

@@ -4,11 +4,11 @@ const app = express(); //The app connects to express
 const passport = require("passport");
 
 
-const authRouter = require("./route/authRoute")
-const blogRouter = require("./route/blogRoute")
+const authRouter = require("./route/authRoute");
+const blogRouter = require("./route/blogRoute");
 
 
-app.use(passport.initialize()) //this initializes the passport
+app.use(passport.initialize()); //this initializes the passport
 require("./middleware/passport");
 
 app.use(express.urlencoded({extended: false})); //this parses urlencoded body to javascript object.

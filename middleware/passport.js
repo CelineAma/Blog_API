@@ -1,3 +1,4 @@
+const express = require("express");
 const passport = require("passport");
 
 const JWTStrategy = require("passport-jwt").Strategy;
@@ -10,7 +11,7 @@ passport.use("jwt", new JWTStrategy({
     secretOrKey: process.env.JWT_SECRET,
 },
 (payload, done) => {
-    done(null, payload.user);
+    done(null, payload.user); //the req.user is the same as payload.user
 }
 
 )
