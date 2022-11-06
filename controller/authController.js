@@ -52,8 +52,9 @@ exports.signin = async (req, res, next) => {
 
 //To confirm if the user provided email and password.
     const user = await userModel.findOne({
-        email
+        email, password
     });
+
     if (!user) return next(new Error("User not Found!"))
 
     const isCorrectPassword = await user.isCorrectPassword(password)
@@ -65,7 +66,7 @@ exports.signin = async (req, res, next) => {
 
     return res.status(201).json({
         status: "Success!",
-        token,
+        // token,
         data: {user},
     });
 }
@@ -74,3 +75,4 @@ exports.signin = async (req, res, next) => {
         return next(error);
     }
 };
+
