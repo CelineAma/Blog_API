@@ -22,9 +22,16 @@ new ObjectId()
 //to create blog
 exports.createBlog = async (rep, res, next) => {
 
+    //creating the blog reading time
+    const body = req.body;
+    body.readingTime = [title, description,]
+
+
     try {
                                         // const {firstName, lastName, email, phoneNumber, password} = req.body;
-    const blogAttributes = {...req.body, author: req.user._id}
+    const blogAttributes = {...req.body, 
+        author: `${req.user.lastname} ${req.user.firstname}`,
+        author_id: req.user._id}
     const blog = await blogModel.create(blogAttributes);
         
     //     {
@@ -54,16 +61,31 @@ exports.createBlog = async (rep, res, next) => {
 
 //All logged in and not logged in users should be able to access all published blogs
 
-exports.getPublishedBlog = async (rep, res, next) => {
+exports.getPublishedBlog = async (req, res, next) => {
 
     try {
-       const filter = {"state": "published"}
-        const blog = await blogModel.find(filter);
+       const filter = {"state": "published"};  //filterable by state
+
+           // Adding Pagination
+           const limitValue = req.query.limit || 20;
+           const skipValue = req.query.skip || 0;
+
+        const blog = await blogModel.find(filter)
+        .limit(limitValue).skip(skipValue);
+
+
+        //pagination alt
+        // let page = +req.query.page || 1
+        // const limit = 20
+        // const skip = (page - 1) * limit
+        // .skip(skip).limit(limit)
+
 
         return res.status(201).json({
             status: "success",
             data: {blog},
         });
+
     }
         catch (error)
         {
@@ -72,7 +94,7 @@ exports.getPublishedBlog = async (rep, res, next) => {
     };
 
 //updating blog by the user to published
-    exports.updateBlog = async (rep, res, next) => {
+    exports.updateBlog = async (req, res, next) => {
 
         try {
             const { blogId }  = req.params;
@@ -81,7 +103,7 @@ exports.getPublishedBlog = async (rep, res, next) => {
             if(!toBeUpdatedBlog) 
             return next(new Error("The blog does not exist"));
 
-            if(toBeUpdatedBlog.author.toString() !== req.user._id)
+            if(toBeUpdatedBlog.author_id.toString() !== req.user._id)
             return next(new Error("No permission to edit"));
 
             const updatedBlog = await blogModel.findByIdAndUpdate(blogId, req.body, {new: true, runValidators: true});
@@ -99,17 +121,17 @@ exports.getPublishedBlog = async (rep, res, next) => {
 
 
 //delete blog
-exports.deleteBlog = async (rep, res, next) => {
+exports.deleteBlog = async (req, res, next) => {
 
     try {
         const { blogId }  = req.params;
 
-        const toBedeletedBlog = await blogModel.findById(blogId);
+        const toBeDeletedBlog = await blogModel.findById(blogId);
 
         if(!toBeDeletedBlog) 
         return next(new Error("The blog does not exist"));
 
-        if(toBeDeletedBlog.author.toString() !== req.user._id)
+        if(toBeDeletedBlog.author_id.toString() !== req.user._id)
         return next(new Error("No permission to delete"));
 
 
@@ -130,14 +152,18 @@ exports.deleteBlog = async (rep, res, next) => {
     };
 
 //to get all the blogs by ID
-exports.getBlogByID = async (rep, res, next) => {
+exports.getBlogByID = async (req, res, next) => {
 
     try {
         const { blogId }  = req.params;
         
-        const blog = await blogModel.findOne({_id:  blogId, state: "published"});
+        const blog = await blogModel.findById({_id:  blogId, state: "published"}).populate("author_id", "-password");
         if(!blog) 
         return next(new Error("The blog does not exist"));
+
+        blog.read_count += 1   //applying the read count
+        await blog.save()
+
         return res.status(200).json({
             status: "success",
             data: {blog},
@@ -150,7 +176,7 @@ exports.getBlogByID = async (rep, res, next) => {
     };
 
 
-
+//pagination
 
 
 // exports.signIn = async (rep, res, next) => {

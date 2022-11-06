@@ -14,7 +14,7 @@ const generateToken = function (user) {
 };
 
 
-exports.signUp = async (rep, res, next) => {
+exports.signup = async (req, res, next) => {
 
     try {
     const {firstName, lastName, email, phoneNumber, password} = req.body;
@@ -44,8 +44,8 @@ exports.signUp = async (rep, res, next) => {
 
 
 
-exports.signIn = async (rep, res, next) => {
-
+exports.signin = async (req, res, next) => {
+    console.log(req.headers);
     try {
     const {email, password} = req.body;
 

@@ -12,7 +12,6 @@ const userSchema = new Schema({
         minLength: 2,
         trim: true,
         required:[true, "Kindly provide your First Name"],
-        unique: true,
     },
 
     lastName: {
@@ -20,7 +19,6 @@ const userSchema = new Schema({
         minLength: 2,
         trim: true,
         required:[true, "Kindly provide your Last Name"],
-        unique: true,
     },
 
     email: {

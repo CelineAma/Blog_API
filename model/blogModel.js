@@ -22,8 +22,14 @@ const blogSchema = new Schema({
         required: [true, "Your Description Here..."],
     },
 
-    author: {
+    author_id: {
         type: ObjectId,
+        ref: "User",
+        required:[true, "Input Author's required"],
+    },
+
+    author: {
+        type: String,
         required:[true, "Author's name is required"],
     },
 
@@ -36,13 +42,11 @@ const blogSchema = new Schema({
 
     read_count: {
         type: Number,
-        required: [true],
         default: 0
     },
 
     reading_time: {
         type: Number,
-        required:[true],
     },
 
     tags: {
@@ -60,7 +64,6 @@ const blogSchema = new Schema({
     timestamp: {
         type: Date,
         default: Date.now(),
-        required:[true],
     },
 });
 
