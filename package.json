@@ -9,9 +9,7 @@
     "build": "app build"
   },
   "keywords": [
-    "blog",
-    "fun",
-    "users"
+    "blog"
   ],
   "author": "Amarachi Celine Arinze",
   "license": "ISC",
