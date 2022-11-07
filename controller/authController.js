@@ -52,21 +52,25 @@ exports.signin = async (req, res, next) => {
 
 //To confirm if the user provided email and password.
     const user = await userModel.findOne({
-        email, password
+        email
     });
 
     if (!user) return next(new Error("User not Found!"))
 
     const isCorrectPassword = await user.isCorrectPassword(password)
+console.log(isCorrectPassword, user);
+
     if (!isCorrectPassword) return next(new Error("Incorrect Password!"))
 
     user.password = undefined;
     const token = generateToken(user);
 
+    
+
 
     return res.status(201).json({
         status: "Success!",
-        // token,
+        token,
         data: {user},
     });
 }

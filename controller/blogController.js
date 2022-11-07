@@ -1,7 +1,7 @@
 const blogModel = require("../model/blogModel");
 const mongoose = require("mongoose");
-const ObjectId = mongoose.Schema.ObjectId;
-new ObjectId()
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 
 // const jwt = require("jsonwebtoken");
 
@@ -20,17 +20,17 @@ new ObjectId()
 
 
 //to create blog
-exports.createBlog = async (rep, res, next) => {
+exports.createBlog = async (req, res, next) => {
 
     //creating the blog reading time
     const body = req.body;
-    body.readingTime = [title, description,]
+    // body.readingTime = [title, description,]
 
 
     try {
                                         // const {firstName, lastName, email, phoneNumber, password} = req.body;
     const blogAttributes = {...req.body, 
-        author: `${req.user.lastname} ${req.user.firstname}`,
+        author: `${req.user.lastName} ${req.user.firstName}`,
         author_id: req.user._id}
     const blog = await blogModel.create(blogAttributes);
         
@@ -48,7 +48,7 @@ exports.createBlog = async (rep, res, next) => {
 
     return res.status(201).json({
         status: "Success!",
-        token,
+        // token,
         data: {blog},
     });
 }
