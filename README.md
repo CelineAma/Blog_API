@@ -87,7 +87,7 @@ $ npm run test
 > jest --detectOpenHandles.unref()
 
   console.log
-    Successfully Connected to MongoDB
+    Connection to MongoDB is Successful
 
       at NativeConnection.log (src/db/db_connect.js:11:13)
 
@@ -101,7 +101,7 @@ POST /api/v1/auth/login 200 260.462 ms - 202
 PASS src/tests/auth.test.js (38.617 s)
   user signup and login
     √ should signup a new user (9469 ms)
-    √ should login a user (304 ms)
+    √ should signin a user (304 ms)
 
 Test Suites: 1 passed, 1 total
 Tests:       2 passed, 2 total
