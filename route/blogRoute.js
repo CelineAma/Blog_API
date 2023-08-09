@@ -7,7 +7,7 @@ const blogRouter = express.Router();
 
 blogRouter.get("/", getPublishedBlog);
 
-blogRouter.get("/", getBlogByID);
+blogRouter.get("/:blogId", getBlogByID);
 
 blogRouter.post("/", passport.authenticate ("jwt", {session: false }),
  createBlog );
