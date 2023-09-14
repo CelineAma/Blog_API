@@ -1,22 +1,18 @@
 const express = require("express");
 const passport = require("passport");
-const {createBlog, getPublishedBlog, updateBlog, deleteBlog, getBlogByID} = require("../controller/blogController");
+const blogController = require("../controllers/blogController");
 
+const router = express.Router();
 
-const blogRouter = express.Router();
+router.get("/", blogController.getPublishedBlog);
 
-blogRouter.get("/", getPublishedBlog);
+router.get("/:blogId", blogController.getBlogByID);
 
-blogRouter.get("/:blogId", getBlogByID);
+router.post("/create", passport.authenticate("jwt", { session: false }), blogController.createBlog);
 
-blogRouter.post("/", passport.authenticate ("jwt", {session: false }),
- createBlog );
+// Patched draft state to published
+router.patch("/:blogId/update", passport.authenticate("jwt", { session: false }), blogController.updateBlog);
 
- //patched draft state to published
-blogRouter.patch("/:blogId", passport.authenticate ("jwt", {session: false }),
- updateBlog);
- 
- blogRouter.delete("/:blogId", passport.authenticate ("jwt", {session: false }),
- deleteBlog);
+router.delete("/:blogId/delete", passport.authenticate("jwt", { session: false }), blogController.deleteBlog);
 
-module.exports = blogRouter;
+module.exports = router;
