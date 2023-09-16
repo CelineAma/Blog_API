@@ -1,5 +1,4 @@
 const dotenv = require("dotenv");
-
 dotenv.config(); // Load environment variables from .env files into process.env
 
 const app = require("./app");

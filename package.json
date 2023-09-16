@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "app dev",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "build": "app build"
   },
   "keywords": [

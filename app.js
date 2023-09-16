@@ -4,15 +4,9 @@ const passport = require("passport");
 const cors = require("cors");
 const authRouter = require("./route/authRoute");
 const blogRouter = require("./route/blogRoute");
-const rateLimit = require("express-rate-limit");
+const { apiRateLimiter } = require("./config/ratelimitConfig");
 
-// Create a rate limiter
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Max 100 requests per IP within the windowMs time frame
-    message: "Too many requests from this IP, please try again later.",
-  });
-
+app.use(apiRateLimiter);
 app.use(cors());
 app.use(passport.initialize()); //this initializes the passport
 require("./middleware/passport");

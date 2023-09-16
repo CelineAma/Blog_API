@@ -2,6 +2,7 @@ const UserModel = require("../model/userModel");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { hashPassword, comparePassword } = require("../utils/passwordUtils");
 
 const generateToken = function (user) {
     const payload = { user };
@@ -23,7 +24,7 @@ exports.signup = async (req, res, next) => {
         const { firstName, lastName, email, phoneNumber, password } = req.body;
 
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 12);
+        const hashedPassword = await hashPassword(password);
 
         const user = await UserModel.create({
             firstName,
@@ -64,7 +65,7 @@ exports.signin = async (req, res, next) => {
 
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        const isCorrectPassword = await user.isCorrectPassword(password);
+        const isCorrectPassword = await comparePassword(password, user.password);
 
         if (!isCorrectPassword)
             return res.status(401).json({ message: "Incorrect Password" });

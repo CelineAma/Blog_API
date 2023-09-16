@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
@@ -27,6 +28,13 @@ const userSchema = new Schema({
 
     phoneNumber: {
         type: String,
+    },
+
+    password: {
+        type: String,
+        minLength: 8,
+        trim: true,
+        required: [true, "Please, enter your password"],
     },
 });
 
