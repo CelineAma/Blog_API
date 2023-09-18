@@ -95,7 +95,7 @@ exports.deleteBlog = async (req, res, next) => {
 
         return res.status(204).json({
             status: "success",
-            data: null,
+            message: "Blog post deleted successfully.",
         });
     } catch (error) {
         return next(error);

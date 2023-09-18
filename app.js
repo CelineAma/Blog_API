@@ -17,6 +17,10 @@ app.use(express.json()); //This parses json body to javascript object.
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/blog", blogRouter);
 
+app.use("/", (req, res) => {
+    res.send("Welcome to Celine's Blog API");
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     const statusCode = err.statusCode || 500;
