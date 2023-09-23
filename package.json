@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Building a Blog API",
   "main": "index.js",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "scripts": {
     "test": "jest",
     "start": "node index.js",
