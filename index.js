@@ -9,7 +9,7 @@ const databaseConnect = require("./config/db");
 databaseConnect();
 
 const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || "localhost";
+const HOST = process.env.HOST || "0.0.0.0";
 
 // Start the server
 const server = http.createServer(app);

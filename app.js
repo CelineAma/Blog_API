@@ -7,7 +7,7 @@ const authRouter = require("./route/authRoute");
 const blogRouter = require("./route/blogRoute");
 const { apiRateLimiter } = require("./config/ratelimitConfig");
 
-// app.use(apiRateLimiter);
+app.use(apiRateLimiter);
 app.use(cors());
 app.use(morgan('combined'));
 app.use(passport.initialize()); //this initializes the passport
