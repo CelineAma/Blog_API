@@ -2,12 +2,14 @@ const express = require("express");
 const app = express(); //The app connects to express
 const passport = require("passport");
 const cors = require("cors");
+const morgan = require("morgan");
 const authRouter = require("./route/authRoute");
 const blogRouter = require("./route/blogRoute");
 const { apiRateLimiter } = require("./config/ratelimitConfig");
 
 app.use(apiRateLimiter);
 app.use(cors());
+app.use(morgan('combined'));
 app.use(passport.initialize()); //this initializes the passport
 require("./middleware/passport");
 
